@@ -6,10 +6,14 @@ class Footer extends Component {
   render() {
     return (
       <div className="row text-light">
-        <div className="col">© Eetu Koskelainen 2018</div>
-        <div className="col align-middle">
+        <div className="col text-center align-middle">
+          © Eetu Koskelainen 2018
+        </div>
+        <div className="col text-center align-middle">
           Powered by:
-          <img src={ButterCMSLogo} className="footer-logo" />
+          <a target="_blank" href="https://buttercms.com">
+            <img src={ButterCMSLogo} className="footer-logo" />
+          </a>
         </div>
       </div>
     );
