@@ -1,31 +1,33 @@
+import React from "react";
+import "./ProjectCard.css";
 
-import React from 'react';
-import './ProjectCard.css';
+class ProjectCard extends React.Component {
+  onThisClick() {
+    let name = this.props.data.title;
+    this.props.onProjectClick(name);
+  }
 
-
-class ProjectCard  extends React.Component {
-
-    onThisClick () {
-        let name  = this.props.data.title;
-        this.props.onProjectClick(name);
-    }
-
-    render(){
-        return(
-                <div className='col m-2 p-2 alert alert-secondary' onClick={this.onThisClick.bind(this)} style={{minWidth: 220, maxWidth: 300, height: 450}}>
-                    <img alt='Logo' className="img-responsive" src={this.props.data.featured_image} />
-                    <div className="">
-                        <br/>
-                        <h5 className="">{this.props.data.title}</h5>
-
-                        <div className="text-muted" dangerouslySetInnerHTML={{__html: this.props.data.summary}} />
-                    </div>
-                </div>
-
-        );
-    }
-
+  render() {
+    return (
+      <div className="col-sm-11 m-1 card" onClick={this.onThisClick.bind(this)}>
+        <div className="card-body">
+          <img
+            alt="Logo"
+            className="img-responsive"
+            src={this.props.data.featured_image}
+          />
+          <h5 className="card-title">{this.props.data.title}</h5>
+          <div
+            className="text-muted card-text"
+            dangerouslySetInnerHTML={{ __html: this.props.data.summary }}
+          />
+          <a href="#" className="btn btn-primary">
+            Go somewhere
+          </a>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default ProjectCard;
-

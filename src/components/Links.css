@@ -1,9 +1,8 @@
-.link_logo{
-    width: 10vw;
-    height: auto;
-    min-width: 40px;
-    max-width: 150px;
-    margin-left: 4vw;
-    margin-right: 4vw;
-
+.link_logo {
+  width: 10vw;
+  height: auto;
+  min-width: 70px;
+  max-width: 150px;
+  margin-left: 4vw;
+  margin-right: 4vw;
 }

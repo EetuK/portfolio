@@ -1,20 +1,56 @@
-import React, {Component} from 'react';
-import ProjectList from './ProjectList';
+import React, { Component } from "react";
+import ProjectList from "./ProjectList";
+import Select from "react-select";
 
+class ProjectApp extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      keywords: [],
+      selectedKeywords: []
+    };
+  }
 
-class ProjectApp extends Component{
+  updateKeywords = keywords => {
+    const labeledKeywords = keywords.map((kw, i) => {
+      return { label: kw, value: kw };
+    });
+    this.setState({ keywords: labeledKeywords });
+  };
 
-    render(){
+  updateSelectedKeywords = value => {
+    this.setState({
+      selectedKeywords: value
+    });
+  };
 
-        return(
-            <div className="text-center justify-content-center mt-4">
-                <h1 className="text-light">Projects</h1>
-                <br/>
-                <br/>
-                <br/>
-                <ProjectList/>
-            </div>
-        );
-    }
+  cleanSelectedKeywords = data => {
+    return data.map((dat, i) => {
+      return dat.value;
+    });
+  };
+
+  render() {
+    return (
+      <div className="text-center justify-content-center mt-4">
+        <br />
+        <Select
+          closeMenuOnSelect={false}
+          isMulti
+          options={this.state.keywords}
+          value={this.state.selectedKeywords}
+          onChange={this.updateSelectedKeywords}
+          closeMenuOnSelect
+        />
+        <br />
+        <ProjectList
+          updateKeywords={this.updateKeywords}
+          selectedKeywords={this.cleanSelectedKeywords(
+            this.state.selectedKeywords
+          )}
+        />
+      </div>
+    );
+  }
 }
-export default ProjectApp
+export default ProjectApp;
