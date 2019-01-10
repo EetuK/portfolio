@@ -1,5 +1,29 @@
-.info_img{
-    width: 35vw;
-    min-width: 220px;
-    max-width: 300px;
+.info_img {
+  width: 35vw;
+  min-width: 220px;
+  max-width: 300px;
+}
+
+.linkedin-icon {
+  margin: 10px;
+  color: rgb(17, 120, 179);
+  -webkit-transition: color 0.2s ease-out;
+  -moz-transition: color 0.2s ease-out;
+  -o-transition: color 0.2s ease-out;
+  transition: color 0.2s ease-out;
+}
+.linkedin-icon:hover {
+  color: rgba(255, 255, 255, 0.986);
+}
+
+.github-icon {
+  margin: 10px;
+  color: rgb(158, 53, 152);
+  -webkit-transition: color 0.2s ease-out;
+  -moz-transition: color 0.2s ease-out;
+  -o-transition: color 0.2s ease-out;
+  transition: color 0.2s ease-out;
+}
+.github-icon:hover {
+  color: rgba(255, 255, 255, 0.986);
 }

@@ -1,0 +1,28 @@
+.img-card {
+  max-width: 150px;
+  border-radius: 10px;
+}
+
+.margin-5px {
+  margin: 10px;
+}
+
+.card-height {
+  min-height: 300px;
+}
+
+.link:hover {
+  text-decoration: none;
+}
+
+.hover-link {
+  -webkit-transition: background-color 0.2s ease-out;
+  -moz-transition: background-color 0.2s ease-out;
+  -o-transition: background-color 0.2s ease-out;
+  transition: background-color 0.2s ease-out;
+}
+
+.hover-link:hover {
+  background-color: rgb(180, 180, 180);
+  color: white;
+}

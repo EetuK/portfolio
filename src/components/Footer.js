@@ -11,8 +11,12 @@ class Footer extends Component {
         </div>
         <div className="col text-center align-middle">
           Powered by:
-          <a target="_blank" href="https://buttercms.com">
-            <img src={ButterCMSLogo} className="footer-logo" />
+          <a
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://buttercms.com"
+          >
+            <img src={ButterCMSLogo} className="footer-logo" alt="ButterCMS" />
           </a>
         </div>
       </div>

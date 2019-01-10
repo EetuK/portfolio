@@ -1,0 +1,10 @@
+.logoheader {
+  list-style: none;
+  font-size: 7.5vmax;
+  color: white;
+  font-family: "Fredericka the Great", cursive;
+}
+
+.link:hover {
+  text-decoration: none;
+}

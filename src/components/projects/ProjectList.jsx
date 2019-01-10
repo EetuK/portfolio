@@ -1,76 +1,100 @@
-import React, {Component} from 'react';
-import Butter from 'buttercms';
-import ProjectCard from './ProjectCard';
-import ProjectSheet from './ProjectSheet';
+import React, { Component } from "react";
+import Butter from "buttercms";
+import ProjectCard from "./ProjectCard";
+import Keys from "../../config/keys";
 
+class ProjectList extends Component {
+  constructor(props) {
+    super();
+    this.state = {
+      butterProjects: [],
+      projects: [],
+      loaded: false,
+      clickedProject: null
+    };
+  }
 
-class ProjectList extends Component{
-    constructor(){
-        super();
-        this.state = {
-            projects: [],
-            clickedProject: null
-        }
-    }
-    componentDidMount() {
-        const butter = Butter('4cdbbe9df44593599957e9e3784fc46bedc8089a');
-        butter.post.list({page: 1, page_size: 30})
-            .then(function(resp){
-                console.log(resp);
-                return resp;
-            })
-            .then((resp) => {
-                this.setState({
-                    projects: resp.data.data
-                })
-            });
-    }
-
-    onProjectClick = (projectName) => {
+  componentDidMount() {
+    let keywords = [];
+    const butter = Butter(Keys.butterCMSToken);
+    butter.post
+      .list({ page: 1, page_size: 30 })
+      .then(function(resp) {
+        return resp;
+      })
+      .then(resp => {
         this.setState({
-            clickedProject:projectName
-        })
-    }
+          projects: resp.data.data,
+          loaded: true
+        });
 
-    render(){
+        resp.data.data.map((project, i) => {
+          return keywords.push(
+            ...project.tags.map((tag, i) => {
+              return tag.name;
+            })
+          );
+        });
 
+        keywords = [...new Set(keywords)];
 
-        let projects = this.state.projects.map((project, index) => {
-            return(
-                <ProjectCard
-                    key={index}
-                    onProjectClick = {this.onProjectClick}
-                    data = {project}
-                />
-            )
-        })
+        this.props.updateKeywords(keywords);
+      });
+  }
 
-        let projectFull = this.state.projects.map((project, index) => {
-            if (project.title === this.state.clickedProject) {
-                return(
-                    <ProjectSheet
-                        key = {index}
-                        onProjectClick={this.onProjectClick}
-                        data = {project}
-                    />
-                )
-            }
-        })
+  onProjectClick = projectName => {
+    this.setState({
+      clickedProject: projectName
+    });
+  };
 
-        let state = null
-
-        if (this.state.clickedProject != null){
-            state = projectFull;
+  render() {
+    const { selectedKeywords } = this.props;
+    let projects = this.state.projects.map((project, index) => {
+      let matchedKeywords = false;
+      project.tags.forEach((keyword, i) => {
+        if (selectedKeywords.includes(keyword.name)) {
+          matchedKeywords = true;
         }
-        else{
-            state = projects;
-        }
+      });
 
-        return(
-            <div className="row text-center justify-content-center bg-dark">
-                    {state}
-            </div>
+      if (matchedKeywords || selectedKeywords.length === 0) {
+        return (
+          <ProjectCard
+            key={index}
+            onProjectClick={this.onProjectClick}
+            data={project}
+          />
         );
+      } else {
+        return null;
+      }
+    });
+
+    if (this.state.loaded) {
+      return (
+        <div
+          className="row text-center justify-content-center bg-dark"
+          style={{ minHeight: "500px" }}
+        >
+          {projects}
+        </div>
+      );
+    } else {
+      return (
+        <div
+          className="row justify-content-center bg-dark"
+          style={{ minHeight: "500px" }}
+        >
+          <div className="col text-center">
+            <i
+              className="fas fa-spinner fa-spin fa-5x"
+              style={{ color: "white" }}
+            />
+          </div>
+        </div>
+      );
     }
+  }
 }
-export default ProjectList
+export default ProjectList;
