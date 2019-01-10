@@ -1,36 +1,45 @@
 import React, { Component } from "react";
-//import Butter from 'buttercms';
+import Butter from "buttercms";
 import ProjectCard from "./ProjectCard";
-import ProjectSheet from "./ProjectSheet";
-import ProjectsData from "../../projects.json";
+import Keys from "../../config/keys";
 
 class ProjectList extends Component {
   constructor(props) {
     super();
     this.state = {
+      butterProjects: [],
       projects: [],
+      loaded: false,
       clickedProject: null
     };
   }
+
   componentDidMount() {
-    /*const butter = Butter('4cdbbe9df44593599957e9e3784fc46bedc8089a');
-        butter.post.list({page: 1, page_size: 30})
-            .then(function(resp){
-                console.log(resp);
-                return resp;
-            })
-            .then((resp) => {
-                this.setState({
-                    projects: resp.data.data
-                })
-            });*/
-    this.setState({ projects: ProjectsData });
     let keywords = [];
-    ProjectsData.map((project, i) => {
-      return keywords.push(...project.keywords);
-    });
-    keywords = [...new Set(keywords)];
-    this.props.updateKeywords(keywords);
+    const butter = Butter(Keys.butterCMSToken);
+    butter.post
+      .list({ page: 1, page_size: 30 })
+      .then(function(resp) {
+        return resp;
+      })
+      .then(resp => {
+        this.setState({
+          projects: resp.data.data,
+          loaded: true
+        });
+
+        resp.data.data.map((project, i) => {
+          return keywords.push(
+            ...project.tags.map((tag, i) => {
+              return tag.name;
+            })
+          );
+        });
+
+        keywords = [...new Set(keywords)];
+
+        this.props.updateKeywords(keywords);
+      });
   }
 
   onProjectClick = projectName => {
@@ -43,8 +52,8 @@ class ProjectList extends Component {
     const { selectedKeywords } = this.props;
     let projects = this.state.projects.map((project, index) => {
       let matchedKeywords = false;
-      project.keywords.forEach((keyword, i) => {
-        if (selectedKeywords.includes(keyword)) {
+      project.tags.forEach((keyword, i) => {
+        if (selectedKeywords.includes(keyword.name)) {
           matchedKeywords = true;
         }
       });
@@ -57,33 +66,32 @@ class ProjectList extends Component {
             data={project}
           />
         );
+      } else {
+        return null;
       }
     });
 
-    let projectFull = this.state.projects.map((project, index) => {
-      if (project.title === this.state.clickedProject) {
-        return (
-          <ProjectSheet
-            key={index}
-            onProjectClick={this.onProjectClick}
-            data={project}
-          />
-        );
-      }
-    });
-
-    let state = null;
-
-    if (this.state.clickedProject != null) {
+    if (this.state.loaded) {
       return (
-        <div className="row text-center justify-content-center bg-dark">
-          {projectFull}
+        <div
+          className="row text-center justify-content-center bg-dark"
+          style={{ minHeight: "500px" }}
+        >
+          {projects}
         </div>
       );
     } else {
       return (
-        <div className="row text-center justify-content-center bg-dark">
-          {projects}
+        <div
+          className="row justify-content-center bg-dark"
+          style={{ minHeight: "500px" }}
+        >
+          <div className="col text-center">
+            <i
+              className="fas fa-spinner fa-spin fa-5x"
+              style={{ color: "white" }}
+            />
+          </div>
         </div>
       );
     }

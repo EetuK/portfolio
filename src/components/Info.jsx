@@ -30,6 +30,26 @@ class Logo extends Component {
               0456300966
             </h5>
             <br />
+            <div className="row">
+              <div className="col text-right">
+                <a
+                  href="https://github.com/EetuK"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i className="fab fa-github fa-5x github-icon" />
+                </a>
+              </div>
+              <div className="col text-left">
+                <a
+                  href="https://www.linkedin.com/in/eetu-koskelainen/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <i className="fab fa-linkedin fa-5x linkedin-icon" />
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </div>

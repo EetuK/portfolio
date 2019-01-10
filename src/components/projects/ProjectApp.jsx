@@ -32,23 +32,32 @@ class ProjectApp extends Component {
 
   render() {
     return (
-      <div className="text-center justify-content-center mt-4">
+      <div className="text-center mt-4">
+        <div className=" row justify-content-center ">
+          <div className="col-sm-4">
+            <h5 className="text-white">Search by technology</h5>
+
+            <Select
+              isMulti
+              options={this.state.keywords}
+              value={this.state.selectedKeywords}
+              onChange={this.updateSelectedKeywords}
+              closeMenuOnSelect
+            />
+          </div>
+        </div>
+
         <br />
-        <Select
-          closeMenuOnSelect={false}
-          isMulti
-          options={this.state.keywords}
-          value={this.state.selectedKeywords}
-          onChange={this.updateSelectedKeywords}
-          closeMenuOnSelect
-        />
-        <br />
-        <ProjectList
-          updateKeywords={this.updateKeywords}
-          selectedKeywords={this.cleanSelectedKeywords(
-            this.state.selectedKeywords
-          )}
-        />
+        <div className="row">
+          <div className="col">
+            <ProjectList
+              updateKeywords={this.updateKeywords}
+              selectedKeywords={this.cleanSelectedKeywords(
+                this.state.selectedKeywords
+              )}
+            />
+          </div>
+        </div>
       </div>
     );
   }

@@ -1,0 +1,9 @@
+.organization-logo {
+  max-width: 250px;
+  min-width: 150px;
+  width: 100%;
+}
+
+.border-down {
+  border-bottom: 1px solid black;
+}

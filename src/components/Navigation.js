@@ -2,34 +2,44 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import "./Navigation.css";
 
-const NavItem = props => (
-  <li className="nav-item">
-    <Link to={props.link}>
-      <h2
-        className={
-          props.link === props.pathname ? "nav-link active" : "nav-link"
-        }
-      >
-        {props.name}
-      </h2>
-    </Link>
-  </li>
-);
-
 class Navigation extends Component {
   constructor(props) {
     super();
-    this.state = {};
   }
   render() {
-    const { pathname } = this.props.location;
-    console.log(pathname);
+    const { showProjectsButton, showHomeButton, title } = this.props;
     return (
-      <div className="mt-4">
-        <ul className="nav nav-pills nav-justified">
-          <NavItem active={true} link="/" pathname={pathname} name="Projects" />
-          <NavItem active={false} link="/cv" pathname={pathname} name="Cv" />
-        </ul>
+      <div className="row mt-4">
+        <div className="col">
+          {showHomeButton ? (
+            <Link to="/">
+              <button type="button" className="btn btn-outline-light m-1">
+                <i class="fas fa-arrow-left" />
+                {"  "}Home
+              </button>
+            </Link>
+          ) : (
+            <p />
+          )}
+
+          {showProjectsButton ? (
+            <Link to="/projects">
+              <button type="button" className="btn btn-outline-light m-1">
+                All Projects
+              </button>
+            </Link>
+          ) : (
+            <p />
+          )}
+        </div>
+        <div className="col text-center">
+          {title !== undefined || title ? (
+            <h1 className="text-white">{title}</h1>
+          ) : (
+            <p />
+          )}
+        </div>
+        <div className="col" />
       </div>
     );
   }

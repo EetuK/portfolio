@@ -1,23 +1,51 @@
 import React, { Component } from "react";
-import CvData from "../cv.json";
+import Butter from "buttercms";
+import "./Cv.css";
+import Keys from "../config/keys";
 
 const Experience = props => (
   <div>
     <div className="card-header">
-      <h4>Experience</h4>
+      <h3>{props.title}</h3>
     </div>
     <div className="card-body">
-      {props.experience.map((exp, i) => {
+      {props.data.map((exp, i) => {
         return (
-          <div key={i}>
-            <h5 className="card-title">{exp.company + ",  " + exp.date}</h5>
-            <p>{exp.title}</p>
-            <ul className="card-text">
-              {exp.details.map((detail, i) => {
-                return <li key={i}>{detail}</li>;
-              })}
-            </ul>
-            <hr />
+          <div className="" key={i}>
+            <div className="row justify-content-center">
+              <div className="col col-sm-6 col-md-4 text-center">
+                <img src={exp.logo} className="organization-logo" alt="Logo" />
+              </div>
+              <div className="col col-sm-6 col-md-4 text-center">
+                <h4 className="card-title">
+                  {exp.organization}
+                  <br />
+                  {exp.date}
+                </h4>
+              </div>
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-sm-8 border-down" />
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-sm-6 mt-4">
+                <h5>{exp.title}</h5>
+                <span dangerouslySetInnerHTML={{ __html: exp.details }} />
+              </div>
+            </div>
+
+            <div className="row" />
+            {i === props.data.length - 1 ? (
+              <div>
+                <br />
+              </div>
+            ) : (
+              <div>
+                <br />
+                <hr />
+                <br />
+              </div>
+            )}
           </div>
         );
       })}
@@ -28,37 +56,49 @@ const Experience = props => (
 class Cv extends Component {
   constructor(props) {
     super();
-    this.state = { experienceOpen: false, educationOpen: false };
+    this.state = {
+      loaded: false,
+      experienceOpen: false,
+      educationOpen: false
+    };
   }
 
+  componentDidMount = () => {
+    const butter = Butter(Keys.butterCMSToken);
+    butter.page.retrieve("*", "cv").then(resp => {
+      console.log(resp);
+      this.setState({
+        cvData: resp.data.data,
+        loaded: true
+      });
+    });
+  };
+
   render() {
-    return (
-      <div>
-        <div className="card m-2">
-          <Experience experience={CvData.experience} open={this.toggleOpen} />
-        </div>
-        <div className="card m-2">
-          <div className="card-header">Education</div>
-          <div className="card-body">
-            <h5 className="card-title">Special title treatment</h5>
-            <p className="card-text">
-              With supporting text below as a natural lead-in to additional
-              content.
-            </p>
-            <h5 className="card-title">Special title treatment</h5>
-            <p className="card-text">
-              With supporting text below as a natural lead-in to additional
-              content.
-            </p>
-            <h5 className="card-title">Special title treatment</h5>
-            <p className="card-text">
-              With supporting text below as a natural lead-in to additional
-              content.
-            </p>
+    const { loaded, cvData } = this.state;
+    if (loaded) {
+      return (
+        <div>
+          <div className="card m-2">
+            <Experience title="Experience" data={cvData.fields.experience} />
+          </div>
+          <div className="card m-2">
+            <Experience title="Education" data={cvData.fields.education} />
           </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      return (
+        <div>
+          <div className="text-center">
+            <i
+              className="fas fa-spinner fa-spin fa-5x"
+              style={{ color: "white" }}
+            />
+          </div>
+        </div>
+      );
+    }
   }
 }
 
