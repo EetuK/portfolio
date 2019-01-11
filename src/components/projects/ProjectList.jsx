@@ -16,6 +16,8 @@ class ProjectList extends Component {
 
   componentDidMount() {
     let keywords = [];
+    console.log("Butter cms token:");
+    console.log(Keys.butterCMSToken);
     const butter = Butter(Keys.butterCMSToken);
     butter.post
       .list({ page: 1, page_size: 30 })
