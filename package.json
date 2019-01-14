@@ -16,6 +16,6 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
-    "netlify-production": "npm run build --define process.env.NODE_ENV='production'"
+    "netlify-production": "npm run build --define process.env.NODE_ENV='development'"
   }
 }
