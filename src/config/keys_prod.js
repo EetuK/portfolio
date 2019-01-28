@@ -1,3 +1,3 @@
 module.exports = {
-  butterCMSToken: process.env.BUTTER_CMS_TOKEN
+  butterCMSToken: process.env.REACT_APP_BUTTER_CMS_TOKEN
 };
