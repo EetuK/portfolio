@@ -1,0 +1,21 @@
+# build environment
+FROM node:9.6.1 as builder
+RUN mkdir /usr/src/app
+WORKDIR /usr/src/app
+ENV PATH /usr/src/app/node_modules/.bin:$PATH
+COPY package.json /usr/src/app/package.json
+RUN npm install --silent
+RUN npm install react-scripts@1.1.1 -g --silent
+RUN npm install serve -g --silent
+
+ARG NODE_ENV=production
+ARG REACT_APP_BUTTER_CMS_TOKEN
+
+ENV NODE_ENV={$NODE_ENV}
+ENV REACT_APP_BUTTER_CMS_TOKEN={$REACT_APP_BUTTER_CMS_TOKEN}
+
+COPY . /usr/src/app
+RUN npm run build
+# build environment
+
+CMD ["serve", "build"]
