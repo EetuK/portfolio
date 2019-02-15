@@ -1,5 +1,5 @@
 # build environment
-FROM node:9.6.1
+FROM node
 RUN mkdir /usr/src/app
 RUN mkdir /usr/src/app/node_modules
 WORKDIR /usr/src/app
