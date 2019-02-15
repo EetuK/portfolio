@@ -9,7 +9,7 @@ COPY package.json /app/package.json
 RUN npm install
 RUN npm config set unsafe-perm true
 # RUN npm install react-scripts@1.1.1 -g
-RUN sudo npm install serve -g
+RUN npm install serve -g
 
 ARG NODE_ENV=production
 ARG REACT_APP_BUTTER_CMS_TOKEN
