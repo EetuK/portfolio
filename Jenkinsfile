@@ -1,9 +1,14 @@
 pipeline {
-  agent any
+  agent {
+    dockerfile {
+      filename 'Dockerfile-prod'
+    }
+
+  }
   stages {
-    stage('docker-compose') {
+    stage('rdy') {
       steps {
-        sh 'docker-compose -f docker-compose-prod.yml up'
+        echo 'Done'
       }
     }
   }
