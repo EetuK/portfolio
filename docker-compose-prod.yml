@@ -13,7 +13,7 @@ services:
       context: .
       dockerfile: Dockerfile-prod
       args:
-        - REACT_APP_BUTTER_CMS_TOKEN=4cdbbe9df44593599957e9e3784fc46bedc8089a
+        REACT_APP_BUTTER_CMS_TOKEN:"4cdbbe9df44593599957e9e3784fc46bedc8089a"
     ports:
       - "5000:5000"
     labels:
