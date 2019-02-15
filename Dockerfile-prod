@@ -1,5 +1,5 @@
 # build environment
-FROM node
+FROM node:alpine
 # Make dirs
 RUN mkdir /usr/src/app
 RUN mkdir /usr/src/app/node_modules
