@@ -17,7 +17,7 @@ services:
     ports:
       - "5000:5000"
     labels:
-      - traefik.frontend.rule=Host:eetuk.fi
+      - traefik.frontend.rule=Host:eetuk.fi,www.eetuk.fi
       - traefik.docker.network=web
       - traefik.port=5000
     networks:
