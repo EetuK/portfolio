@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('docker-compose') {
       steps {
-        sh 'docker-compose -f docker-compose.yml up'
+        sh 'docker-compose -f docker-compose.yaml up'
       }
     }
   }
