@@ -1,5 +1,11 @@
 version: "3"
 
+networks:
+  proxy:
+    external: true
+  internal:
+    external: false
+
 services:
   portfolio:
     container_name: portfolio
@@ -10,3 +16,10 @@ services:
         - REACT_APP_BUTTER_CMS_TOKEN=4cdbbe9df44593599957e9e3784fc46bedc8089a
     ports:
       - "5000:5000"
+    labels:
+      - traefik.frontend.rule=Host:eetuk.fi
+      - traefik.docker.network=web
+      - traefik.port=5000
+    networks:
+      - internal
+      - web
