@@ -1,5 +1,6 @@
 # build environment
 FROM node
+# Make dirs
 RUN mkdir /usr/src/app
 RUN mkdir /usr/src/app/node_modules
 WORKDIR /usr/src/app
